@@ -1,0 +1,1 @@
+public readonly record struct Rotation(double x, double y, double z);

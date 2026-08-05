@@ -1,0 +1,1 @@
+public readonly record struct Direction(double x, double y, double z);

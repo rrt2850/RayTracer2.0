@@ -1,0 +1,1 @@
+public readonly record struct Coordinate(double x, double y, double z);

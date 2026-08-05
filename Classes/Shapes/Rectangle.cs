@@ -1,0 +1,1 @@
+public record struct Rectangle(Coordinate center, Rotation rotation, double width, double height, double depth);
