@@ -1,5 +1,4 @@
 using System.Drawing;
-using System.Drawing.Imaging;
 
 public class Camera
 {   
@@ -20,9 +19,9 @@ public class Camera
 
     }
 
-    public void saveImage()
+    public void saveImage(string name = "output")
     {
-        using var bitmap = new Bitmap(xRes, yRes, PixelFormat.Canonical);
+        using var bitmap = new Bitmap(xRes, yRes);
 
         Color currColor;
 
@@ -35,6 +34,6 @@ public class Camera
             }
         }
 
-        bitmap.Save("output.png");
+        bitmap.Save($"{name}.png");
     }
 }

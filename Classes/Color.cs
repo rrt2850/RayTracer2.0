@@ -1,6 +1,6 @@
 using System.Drawing;
 
-public readonly record struct Color(double R, double G, double B)
+public readonly record struct Color(double R = 0.0, double G = 0.0, double B = 0.0)
 {
     public static Color operator +(Color x, Color y)
     {

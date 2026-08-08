@@ -1,1 +1,1 @@
-public readonly record  struct Ray(Coordinate position, Direction direction, double magnitude);
+public readonly record  struct Ray(Coordinate origin = default, Direction direction = default, double magnitude = 1.0);
