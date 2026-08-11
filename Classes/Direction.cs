@@ -25,4 +25,7 @@ public readonly record struct Direction(double X = 0.0, double Y = 0.0, double Z
     public static Direction operator +(Direction a, Direction b) => new(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
     public static Direction operator *(Direction a, double s) => new(a.X * s, a.Y * s, a.Z * s);
     public static Direction operator -(Direction a) => new(-a.X, -a.Y, -a.Z);
+
+    public override string ToString() => $"<{X}, {Y}, {Z}>";
+    
 }

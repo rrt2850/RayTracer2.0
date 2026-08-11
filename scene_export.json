@@ -1,0 +1,41 @@
+{
+    "sceneName": "SampleScene",
+    "objectCount": 1,
+    "objects": [
+        {
+            "name": "Cube",
+            "primitiveType": "Rectangle",
+            "position": {
+                "x": 3.940000057220459,
+                "y": 8.569999694824219,
+                "z": 11.369999885559082
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "scale": {
+                "x": 1.0,
+                "y": 2.0,
+                "z": 1.0
+            }
+        }
+    ],
+    "camera": {
+        "name": "Main Camera",
+        "position": {
+            "x": 2.7899999618530275,
+            "y": 10.279999732971192,
+            "z": 2.3499999046325685
+        },
+        "rotation": {
+            "x": 0.0,
+            "y": 0.0,
+            "z": -26.043
+        },
+        "xResolution": 800,
+        "yResolution": 800,
+        "fov": 60.0
+    }
+}

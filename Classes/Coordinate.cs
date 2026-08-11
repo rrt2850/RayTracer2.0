@@ -9,4 +9,6 @@ public readonly record struct Coordinate(double X = 0.0, double Y = 0.0, double 
     public static Coordinate operator +(Coordinate a, Coordinate b) => new(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
     
     public static Coordinate operator *(Coordinate a, double scalar) => new(a.X * scalar, a.Y * scalar, a.Z * scalar);
+
+    public override string ToString() => $"({X}, {Y}, {Z})";
 }

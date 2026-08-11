@@ -5,9 +5,9 @@ using System.Runtime.CompilerServices;
 
 public class Camera
 {
-    private readonly Direction refForward = new Direction(0, 0, 1);
-    private readonly Direction refUp = new Direction(0, 1, 0);
-    private readonly Direction refRight = new Direction (1, 0, 0);   
+    private readonly Direction refForward = new(0, 0, 1);
+    private readonly Direction refUp = new(0, 1, 0);
+    private readonly Direction refRight = new(1, 0, 0);   
     private readonly Coordinate position;
     private readonly Direction forward;
     private readonly Direction up;
@@ -16,16 +16,17 @@ public class Camera
     private readonly double fovAngle = 90.0;
     private readonly double fovDistance = 1.0; // I don't want to think about this yet
 
-    private readonly int xRes;
-    private readonly int yRes;
+    public readonly int xRes;
+    public readonly int yRes;
 
-    private Color[,] colorVals;
-    private Ray[] rays;
+    public Color[,] colorVals;
+    public Ray[] rays;
     
     public Camera(Coordinate _position = default, Rotation _rotation = default, double fov = 80.0, int _xRes = 500, int _yRes = 500)
     {
         position = _position;
         rotation = _rotation;
+        fovAngle = fov;
         forward = refForward.Rotate(_rotation);
         right = refRight.Rotate(_rotation);
         up = refUp.Rotate(_rotation);
@@ -81,5 +82,25 @@ public class Camera
         }
 
         bitmap.Save($"{name}.png");
+    }
+
+    public override string ToString()
+    {
+        return $"""
+        Camera:
+        Position:   {position}
+        Rotation:   {rotation}
+
+        Forward:    {forward}
+        Up:         {up}
+        Right:      {right}
+
+        FOV Angle:  {fovAngle}
+        FOV Distance: {fovDistance}
+
+        Resolution: {xRes} x {yRes}
+        ColorVals:  {colorVals.GetLength(0)} x {colorVals.GetLength(1)}
+        Rays:       {rays.Length}
+        """;
     }
 }

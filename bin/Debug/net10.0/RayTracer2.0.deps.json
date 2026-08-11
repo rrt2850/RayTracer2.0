@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v10.0": {
       "RayTracer2.0/1.0.0": {
         "dependencies": {
+          "Newtonsoft.Json": "13.0.4",
           "System.Drawing.Common": "10.0.10"
         },
         "runtime": {
@@ -27,6 +28,14 @@
             "assetType": "runtime",
             "assemblyVersion": "10.0.0.0",
             "fileVersion": "10.0.1026.32716"
+          }
+        }
+      },
+      "Newtonsoft.Json/13.0.4": {
+        "runtime": {
+          "lib/net6.0/Newtonsoft.Json.dll": {
+            "assemblyVersion": "13.0.0.0",
+            "fileVersion": "13.0.4.30916"
           }
         }
       },
@@ -63,6 +72,13 @@
       "sha512": "sha512-IY0lTfC2uVwTizjtGgQ03ViwyXGQ9lMDblzB889/HyguAZJ2J8pRrjPown8h2eJe8WFc8nh+BUEsEPkshzizYQ==",
       "path": "microsoft.win32.systemevents/10.0.10",
       "hashPath": "microsoft.win32.systemevents.10.0.10.nupkg.sha512"
+    },
+    "Newtonsoft.Json/13.0.4": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A==",
+      "path": "newtonsoft.json/13.0.4",
+      "hashPath": "newtonsoft.json.13.0.4.nupkg.sha512"
     },
     "System.Drawing.Common/10.0.10": {
       "type": "package",

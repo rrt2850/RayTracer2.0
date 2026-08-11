@@ -1,5 +1,6 @@
 /// <summary>
 /// A rectangular prism (or a cube)
+/// Measurements are in meters to match unity's system
 /// </summary>
 /// <param name="center">The rectangle origin in world coordinates</param>
 /// <param name="rotation">Any rotation applied to the rectangle</param>
@@ -8,17 +9,27 @@
 /// <param name="depth">The depth of the rectangle</param> <summary>
 /// 
 /// </summary>
-public record struct Rectangle(Coordinate center = default, Rotation rotation = default, double width = 1.0, double height = 1.0, double depth = 1.0)
+public record struct Rectangle(Coordinate center = default, Rotation rotation = default, double width = 1.0, double height = 1.0, double depth = 1.0) : ISceneObject
 {
-    private double xMin = -width/2;
-    private double xMax = width/2;
+    private readonly double xMin = -width/2;
+    private readonly double xMax = width/2;
 
-    private double yMin = -height/2;
-    private double yMax = height/2;
+    private readonly double yMin = -height/2;
+    private readonly double yMax = height/2;
 
-    private double zMin = -depth/2;
-    private double zMax = depth/2;
+    private readonly double zMin = -depth/2;
+    private readonly double zMax = depth/2;
 
+
+    /// <summary>
+    /// A function that traces a ray and determines what color it is
+    /// </summary>
+    /// <param name="ray">The ray to trace</param>
+    /// <returns>The calculated color</returns>
+    public readonly bool Trace(Ray ray)
+    {
+        return Collides(ray);
+    }
 
     /// <summary>
     /// A collision function for rectangular prisms.
@@ -26,7 +37,7 @@ public record struct Rectangle(Coordinate center = default, Rotation rotation = 
     /// </summary>
     /// <param name="ray">The ray we're determining the collision for</param>
     /// <returns>True if there is a collision, False otherwise</returns>
-    public bool collides(Ray ray)
+    public readonly bool Collides(Ray ray)
     {
         // Convert everything to local coordinates
         // Translate and then rotate the ray so that the rectangle is the origin and has no rotation
@@ -65,5 +76,25 @@ public record struct Rectangle(Coordinate center = default, Rotation rotation = 
         if(lastArrival <=firstDeparture) return true;
         
         return false;
+    }
+
+    public override readonly string ToString()
+    {
+        return $"""
+        Rectangle:
+        Center:  {center}
+        Rotation: {rotation}
+
+        Width:   {width}
+        Height:  {height}
+        Depth:   {depth}
+
+        X Min:   {xMin}
+        X Max:   {xMax}
+        Y Min:   {yMin}
+        Y Max:   {yMax}
+        Z Min:   {zMin}
+        Z Max:   {zMax}
+        """;
     }
 }

@@ -8,7 +8,7 @@ public readonly record struct Rotation
     private readonly double sinY, cosY;
     private readonly double sinZ, cosZ;
 
-        public Rotation(double x = 0.0, double y = 0.0, double z = 0.0)
+    public Rotation(double x = 0.0, double y = 0.0, double z = 0.0)
     {
         X = x;
         Y = y;
@@ -38,9 +38,9 @@ public readonly record struct Rotation
     /// <returns>The coordinate with the rotation applied</returns>
     public Coordinate Apply(Coordinate point)
     {
-        var applied = rotateX(point.X, point.Y, point.Z, cosX, sinX);
-        applied = rotateY(applied.x, applied.y, applied.z, cosY, sinY);
-        applied = rotateZ(applied.x, applied.y, applied.z, cosZ, sinZ);
+        var applied = RotateX(point.X, point.Y, point.Z, cosX, sinX);
+        applied = RotateY(applied.x, applied.y, applied.z, cosY, sinY);
+        applied = RotateZ(applied.x, applied.y, applied.z, cosZ, sinZ);
 
         return new Coordinate(applied.x, applied.y, applied.z);
     }
@@ -52,9 +52,9 @@ public readonly record struct Rotation
     /// <returns>The coordinate with the inverse rotation applied</returns>
     public Coordinate ApplyInverse(Coordinate point)
     {
-        var applied = rotateX(point.X, point.Y, point.Z, cosX, -sinX);
-        applied = rotateY(applied.x, applied.y, applied.z, cosY, -sinY);
-        applied = rotateX(applied.x, applied.y, applied.z, cosZ, -sinZ);
+        var applied = RotateX(point.X, point.Y, point.Z, cosX, -sinX);
+        applied = RotateY(applied.x, applied.y, applied.z, cosY, -sinY);
+        applied = RotateX(applied.x, applied.y, applied.z, cosZ, -sinZ);
 
         return new Coordinate(applied.x, applied.y, applied.z);
     }
@@ -71,9 +71,9 @@ public readonly record struct Rotation
     /// <returns>The coordinate with the rotation applied</returns>
     public Direction Apply(Direction direction)
     {
-        var applied = rotateX(direction.X, direction.Y, direction.Z, cosX, sinX);
-        applied = rotateY(applied.x, applied.y, applied.z, cosY, sinY);
-        applied = rotateZ(applied.x, applied.y, applied.z, cosZ, sinZ);
+        var applied = RotateX(direction.X, direction.Y, direction.Z, cosX, sinX);
+        applied = RotateY(applied.x, applied.y, applied.z, cosY, sinY);
+        applied = RotateZ(applied.x, applied.y, applied.z, cosZ, sinZ);
 
         return new Direction(applied.x, applied.y, applied.z);
     }
@@ -85,9 +85,9 @@ public readonly record struct Rotation
     /// <returns>The coordinate with the inverse rotation applied</returns>
     public Direction ApplyInverse(Direction direction)
     {
-        var applied = rotateZ(direction.X, direction.Y, direction.Z, cosX, -sinX);
-        applied = rotateY(applied.x, applied.y, applied.z, cosY, -sinY);
-        applied = rotateX(applied.x, applied.y, applied.z, cosZ, -sinZ);
+        var applied = RotateZ(direction.X, direction.Y, direction.Z, cosZ, -sinZ);
+        applied = RotateY(applied.x, applied.y, applied.z, cosY, -sinY);
+        applied = RotateX(applied.x, applied.y, applied.z, cosX, -sinX);
 
         return new Direction(applied.x, applied.y, applied.z);
     }
@@ -106,11 +106,16 @@ public readonly record struct Rotation
         return degrees * Math.PI / 180.0;
     }
 
-    private static (double x, double y, double z) rotateX(double x, double y, double z, double sin, double cos)
+    private static (double x, double y, double z) RotateX(
+        double x, double y, double z, double cos, double sin)
         => (x, y * cos - z * sin, y * sin + z * cos);
-    private static (double x, double y, double z) rotateY(double x, double y, double z, double sin, double cos)
+
+    private static (double x, double y, double z) RotateY(
+        double x, double y, double z, double cos, double sin)
         => (x * cos + z * sin, y, -x * sin + z * cos);
-    private static (double x, double y, double z) rotateZ(double x, double y, double z, double sin, double cos)
+
+    private static (double x, double y, double z) RotateZ(
+        double x, double y, double z, double cos, double sin)
         => (x * cos - y * sin, x * sin + y * cos, z);
     
 }
