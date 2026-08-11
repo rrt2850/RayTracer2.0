@@ -4,16 +4,9 @@ public readonly record struct Coordinate(double X = 0.0, double Y = 0.0, double 
 
     public Coordinate InverseRotate(Rotation rotation) => rotation.ApplyInverse(this);
 
-    public static Coordinate operator -(Coordinate a, Coordinate b)
-    {
-        return new Coordinate(a.X - b.X, a.Y - b.Y, a.Z - b.Z);    
-    }
-    public static Coordinate operator +(Coordinate a, Coordinate b)
-    {
-        return new Coordinate(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
-    }
-    public static Coordinate operator *(Coordinate a, double scalar)
-    {
-        return new Coordinate(a.X * scalar, a.Y * scalar, a.Z * scalar);
-    }
+    public static Direction operator -(Coordinate a, Coordinate b) => new(a.X - b.X, a.Y - b.Y, a.Z - b.Z);    
+
+    public static Coordinate operator +(Coordinate a, Coordinate b) => new(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+    
+    public static Coordinate operator *(Coordinate a, double scalar) => new(a.X * scalar, a.Y * scalar, a.Z * scalar);
 }

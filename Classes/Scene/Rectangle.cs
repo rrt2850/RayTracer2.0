@@ -30,7 +30,8 @@ public record struct Rectangle(Coordinate center = default, Rotation rotation = 
     {
         // Convert everything to local coordinates
         // Translate and then rotate the ray so that the rectangle is the origin and has no rotation
-        Coordinate localOrigin = (ray.origin - center).InverseRotate(rotation);
+        // TODO: Make this less smelly
+        Coordinate localOrigin = (ray.origin - center).InverseRotate(rotation).ToCoordinate();
         Direction localDirection = ray.direction.InverseRotate(rotation);
 
         // Since the ray is origin + t * direction, what t value makes the ray's x coordinate equal xMin?
