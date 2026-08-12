@@ -12,7 +12,7 @@ public readonly record struct Color(double R = 0.0, double G = 0.0, double B = 0
         return new Color (x.R * scalar, x.G * scalar, x.B * scalar);
     }
 
-    public System.Drawing.Color convert()
+    public System.Drawing.Color Convert()
     {   
         return System.Drawing.Color.FromArgb(
             255,

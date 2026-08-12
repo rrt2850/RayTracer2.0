@@ -58,7 +58,8 @@ public class Camera
             {
                 yOffset = currY * yUnit;
 
-                Coordinate planePoint = position + (forward*fovDistance).ToCoordinate() + (cornerX + right * xOffset + cornerY + -up * yOffset).ToCoordinate();
+                Coordinate planePoint = position + (forward*fovDistance).ToCoordinate()
+                                      + (cornerX + right * xOffset + cornerY + -up * yOffset).ToCoordinate();
                 Direction rayDirection = (planePoint - position).Normalized();
 
                 rays[currX * yRes + currY] = new Ray(position, rayDirection);
@@ -77,7 +78,7 @@ public class Camera
             for(int currY = 0; currY < yRes; currY++)
             {
                 currColor = colorVals[currX, currY];
-                bitmap.SetPixel(currX, currY, currColor.convert());
+                bitmap.SetPixel(currX, currY, currColor.Convert());
             }
         }
 

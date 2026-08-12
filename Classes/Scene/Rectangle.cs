@@ -1,35 +1,27 @@
+using System.Net;
+
 /// <summary>
 /// A rectangular prism (or a cube)
 /// Measurements are in meters to match unity's system
 /// </summary>
 /// <param name="center">The rectangle origin in world coordinates</param>
 /// <param name="rotation">Any rotation applied to the rectangle</param>
-/// <param name="width">The width of the rectangle</param>
-/// <param name="height">The height of the rectangle</param>
-/// <param name="depth">The depth of the rectangle</param> <summary>
-/// 
-/// </summary>
-public record struct Rectangle(Coordinate center = default, Rotation rotation = default, double width = 1.0, double height = 1.0, double depth = 1.0) : ISceneObject
+/// <param name="xScale">The width of the rectangle</param>
+/// <param name="yScale">The height of the rectangle</param>
+/// <param name="zScale">The depth of the rectangle</param>
+public record struct Rectangle(Coordinate center = default, Rotation rotation = default, double xScale = 1.0, double yScale = 1.0, double zScale = 1.0, Material _material = null!) : ISceneObject
 {
-    private readonly double xMin = -width/2;
-    private readonly double xMax = width/2;
+    private readonly double xMin = -xScale/2;
+    private readonly double xMax = xScale/2;
 
-    private readonly double yMin = -height/2;
-    private readonly double yMax = height/2;
+    private readonly double yMin = -yScale/2;
+    private readonly double yMax = yScale/2;
 
-    private readonly double zMin = -depth/2;
-    private readonly double zMax = depth/2;
+    private readonly double zMin = -zScale/2;
+    private readonly double zMax = zScale/2;
 
+    public Material material = _material ?? Material.Default;
 
-    /// <summary>
-    /// A function that traces a ray and determines what color it is
-    /// </summary>
-    /// <param name="ray">The ray to trace</param>
-    /// <returns>The calculated color</returns>
-    public readonly bool Trace(Ray ray)
-    {
-        return Collides(ray);
-    }
 
     /// <summary>
     /// A collision function for rectangular prisms.
@@ -37,7 +29,7 @@ public record struct Rectangle(Coordinate center = default, Rotation rotation = 
     /// </summary>
     /// <param name="ray">The ray we're determining the collision for</param>
     /// <returns>True if there is a collision, False otherwise</returns>
-    public readonly bool Collides(Ray ray)
+    public readonly HitResult Trace(Ray ray)
     {
         // Convert everything to local coordinates
         // Translate and then rotate the ray so that the rectangle is the origin and has no rotation
@@ -71,11 +63,17 @@ public record struct Rectangle(Coordinate center = default, Rotation rotation = 
         double lastArrival = Math.Max(t_xNear, Math.Max(t_yNear, t_zNear));
         double firstDeparture = Math.Min(t_xFar, Math.Min(t_yFar, t_zFar));
 
-        if (firstDeparture < 0) return false;
+        if (firstDeparture < 0) return HitResult.Miss;
+        if(lastArrival > firstDeparture) return HitResult.Miss;
 
-        if(lastArrival <=firstDeparture) return true;
+        // Use lastArrival as the entry point, unless the ray starts inside the box (lastArrival < 0),
+        // then firstDeparture is the first surface the ray actually crosses
+        double hitDistance = lastArrival >= 0 ? lastArrival : firstDeparture;
+
+        Direction localHitPoint = localDirection * hitDistance + localOrigin.ToDirection();
+        Coordinate worldHitPoint = localHitPoint.Rotate(rotation).ToCoordinate() + center;
         
-        return false;
+        return HitResult.Hit(hitDistance, worldHitPoint, material);
     }
 
     public override readonly string ToString()
@@ -85,9 +83,9 @@ public record struct Rectangle(Coordinate center = default, Rotation rotation = 
         Center:  {center}
         Rotation: {rotation}
 
-        Width:   {width}
-        Height:  {height}
-        Depth:   {depth}
+        Width:   {xScale}
+        Height:  {yScale}
+        Depth:   {zScale}
 
         X Min:   {xMin}
         X Max:   {xMax}
@@ -95,6 +93,8 @@ public record struct Rectangle(Coordinate center = default, Rotation rotation = 
         Y Max:   {yMax}
         Z Min:   {zMin}
         Z Max:   {zMax}
+
+        Material: {material}
         """;
     }
 }
